@@ -1,3 +1,4 @@
+require('dotenv').config();
 const Discord = require("discord.js");
 const { Client, GatewayIntentBits, IntentsBitField } = require("discord.js");
 const cron = require("node-cron");
@@ -12,8 +13,8 @@ const client = new Client({
     IntentsBitField.Flags.MessageContent,
 ],
 });
-const token =
-  "MTEzNDkzMjk2NTI2MTA3MDQ3Nw.GAOlr6.EYYP6i4StY86HYLEyARnb99x1cREdYsYlSvqJs";
+
+const token = process.env.DISCORD_TOKEN
 
 try {
     client.login(token);   
