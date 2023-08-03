@@ -57,8 +57,8 @@ const questions = [
 
 function postStandupQuestion() {
   const standupQuestion = getRandomStandupQuestion();
-  const guild = client.guilds.cache.get("1134950687587967049"); //SERVER ID
-  const channel = guild.channels.cache.get("1134950688208719995"); //CHANNEL ID
+  const guild = client.guilds.cache.get("1131975954600833034"); //SERVER ID
+  const channel = guild.channels.cache.get("1131975955456458875"); //CHANNEL ID
   if (channel) {
     channel.send(
       `@here Good morning! Standup Question for today: ${standupQuestion}`
@@ -68,7 +68,7 @@ function postStandupQuestion() {
 
 function scheduleDailyStandupQuestion() {
 //   cron.schedule('* * * * *', () => { // Every minute testing
-  cron.schedule('0 15 * * 1-5', () => {
+  cron.schedule('0 9 * * 1-5', () => {
     postStandupQuestion();
   });
 }
@@ -80,13 +80,13 @@ client.on("ready", () => {
     scheduleDailyStandupQuestion()
   });
 
-//*****ADD NEW QUESTION*****/
+//*****POST NEW QUESTION*****/
 client.on("messageCreate", (message) => {
     if (!message.author.bot && message.content.toLowerCase() === "!newquestion") {
         console.log('!newquestion command received...')
         const standupQuestion = getRandomStandupQuestion()
-        const guild = client.guilds.cache.get("1134950687587967049"); //SERVER ID
-        const channel = guild.channels.cache.get("1134950688208719995"); //CHANNEL ID
+        const guild = client.guilds.cache.get("1131975954600833034"); //SERVER ID
+        const channel = guild.channels.cache.get("1131975955456458875"); //CHANNEL ID
         setTimeout(() => {
             console.log('posting new question')
             channel.send(`@here Okay, here's a different question: ${standupQuestion}`)
@@ -97,4 +97,37 @@ client.on("messageCreate", (message) => {
 function getRandomStandupQuestion() {
     const randomIndex = Math.floor(Math.random() * questions.length)
     return questions[randomIndex]
+}
+
+// *****encouragement*****
+const encouragementMessages = [
+  "You're doing great! Keep up the good work!",
+  "Believe in yourself. You can do it!",
+  "Success is a journey, not a destination.",
+  "Keep learning and growing. You'll get there!",
+  "Every problem you solve makes you a better engineer!",
+  "The only way to learn programming is by doing. Keep coding!",
+  "Mistakes are part of the learning process. Embrace them!",
+  "You're on the path to becoming an awesome software engineer!",
+  "Hard work and persistence will lead you to success.",
+  "Don't give up! You're making progress every day.",
+  "You've got this! Stay focused and determined.",
+  "Each step forward brings you closer to your goals.",
+  "You're capable of great things. Believe in yourself!",
+  "Keep pushing your limits. You'll surprise yourself!",
+  "Your dedication to learning is commendable. Keep it up!",
+];
+
+client.on("messageCreate",  (message) => {
+  if (!message.author.bot) {
+    if (message.content.toLowerCase() === "!encouragetest" && message.guild.id === "1134950687587967049") {
+      const encouragement = getRandomEncouragement();
+      message.channel.send(`Hey ${message.author}! ${encouragement}`)
+    }
+  }
+})
+
+function getRandomEncouragement() {
+  const randomIndex = Math.floor(Math.random() * encouragementMessages.length)
+  return encouragementMessages[randomIndex]
 }
