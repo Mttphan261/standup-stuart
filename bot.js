@@ -120,12 +120,14 @@ const encouragementMessages = [
 
 client.on("messageCreate",  (message) => {
   if (!message.author.bot) {
-    if (message.content.toLowerCase() === "!encouragetest" && message.guild.id === "1134950687587967049") {
+    if (message.content.toLowerCase() === "!encouragement") {
       const encouragement = getRandomEncouragement();
       message.channel.send(`Hey ${message.author}! ${encouragement}`)
     }
   }
 })
+
+// && message.guild.id === "1134950687587967049"
 
 function getRandomEncouragement() {
   const randomIndex = Math.floor(Math.random() * encouragementMessages.length)
